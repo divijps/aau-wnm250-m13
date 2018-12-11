@@ -1,0 +1,162 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>Index page</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+* {
+	box-sizing:border-box;
+}
+.container {
+	max-width:800px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.gallery {
+	display:flex;
+	flex-wrap:wrap;
+}
+.column {
+	width:25%;
+	flex: 0 0 auto;
+	padding:10px;
+}
+.column-image {
+	width:100%;
+	vertical-align:middle;
+}
+.column-title {
+	font-size:0.7em;
+	padding:0.2rem 0.5rem;
+}
+
+.lightbox {
+	position:fixed;
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	background-color:rgba(0,0,0,0.8);
+}
+.lightbox-image {
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	max-width:calc(100% - 30px);
+	max-height:calc(100% - 30px);
+}
+@media (max-width:500px){
+	.column {
+		width:50%;
+	}
+}
+</style>
+</head>
+
+<body>
+    <div class="gallery container"></div>
+<script>
+      
+	// Create an array of image objects, or use a database for this information
+	var images = [
+	  {
+	    thumb:"thumbs/1_thumb.jpg",
+	    source:"images/1.jpg",
+	    title:"Image 1"
+	  },
+	  {
+	    thumb:"thumbs/2_thumb.jpg",
+	    source:"images/2.jpg",
+	    title:"Image 2"
+	  },
+	  {
+	    thumb:"thumbs/3_thumb.jpg",
+	    source:"images/3.jpg",
+	    title:"Image 3"
+	  },
+	  {
+	    thumb:"thumbs/4_thumb.jpg",
+	    source:"images/4.jpg",
+	    title:"Image 4"
+	  },
+	  {
+	    thumb:"thumbs/5_thumb.jpg",
+	    source:"images/5.jpg",
+	    title:"Image 5"
+	  },
+	  {
+	    thumb:"thumbs/6_thumb.jpg",
+	    source:"images/6.jpg",
+	    title:"Image 6"
+	  },
+	  {
+	    thumb:"thumbs/7_thumb.jpg",
+	    source:"images/7.jpg",
+	    title:"Image 7"
+	  },
+	  {
+	    thumb:"thumbs/8_thumb.jpg",
+	    source:"images/8.jpg",
+	    title:"Image 8"
+	  },
+	  {
+	    thumb:"thumbs/9_thumb.jpg",
+	    source:"images/9.jpg",
+	    title:"Image 9"
+	  },
+	  {
+	    thumb:"thumbs/10_thumb.jpg",
+	    source:"images/10.jpg",
+	    title:"Image 10"
+	  },
+	  {
+	    thumb:"thumbs/11_thumb.jpg",
+	    source:"images/11.jpg",
+	    title:"Image 11"
+	  },
+	  {
+	    thumb:"thumbs/12_thumb.jpg",
+	    source:"images/12.jpg",
+	    title:"Image 12"
+	  }
+	];
+
+	// A function to make the html of a gallery of thumbnails
+	function makeGallery(){
+	  var output = "";
+	  // Use let when looping to instantiate variables
+	  for(let i in images){
+	    // Think about where you add data-attributes
+	    output+=`<div class='column' data-source='${images[i].source}'>
+	    <img class='column-image' src='${images[i].thumb}'>
+	    <div class='column-title'>${images[i].title}</div>
+	    </div>`;
+	  }
+	  $(".gallery").html(output);
+	}
+
+	// Functions can be created with custom arguments.
+	function makeLightBox(src) {
+	  $("body").append(`<div class='lightbox'>
+	    <img class='lightbox-image' src='${src}'>
+	    </div>`)
+	}
+
+	$(function(){
+	  // Create the gallery as soon as the document is ready
+	  makeGallery();
+	  
+	  // Use Event Delegation because elements are being added and removed by Javascript
+	  $("body")
+	  .on("click",".column",function(){
+	    makeLightBox($(this).data('source'));
+	  })
+	  .on("click",".lightbox",function(){
+	    $(this).remove();
+	  })
+	});
+</script>
+
+</body>
+</html>
